@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block contenuPage %}
-    <h3>Ici apparaitra la liste des entreprises proposant des stages</h3>
+    {% for entrepriseCourante in entreprises %}
+        <a href="{{path('stages-entreprise',{id:entrepriseCourante.id})}}">hello</a>
+    {% endfor %}
 {% endblock %}
 
 {% block footerPage %}Footer des entreprises{% endblock %}
