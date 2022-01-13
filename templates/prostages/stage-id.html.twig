@@ -11,8 +11,11 @@
     <h2>Entreprise : {{stage.enreprise.nom}}</h2>
     <h5>Description : {{stage.descMission}}</h5>
     <p>Email de contact : {{stage.emailContact}}</p>
+    <h6>Formations concernées : </h6>
+        {% for formationCourante in stage.formation %}
+            <h6>{{formationCourante.nomCourt}}</h6>
+        {% endfor %}
 
-    
 
 {% endblock %}
 
