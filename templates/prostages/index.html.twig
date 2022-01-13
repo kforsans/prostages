@@ -7,23 +7,35 @@
 {% endblock %}
 
 {% block contenuPage %}
-    {% for stageCourant in stages %}
-        <div class="card-deck">
-            <div class="card bg-default">
-                <h5 class="card-header">
-                    {{stageCourant.titre}}
-                </h5>
-                <div class="card-body">
-                    <p class="card-text">
-                        {{stageCourant.descMission}}
-                    </p>
-                </div>
-                <div class="card-footer">
-                    Card footer
+    
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                {% for stageCourant in stages %}
+                    <div class="col-md-4">
+                        <div class="card bg-default">
+                            <h5 class="card-header">
+                                {{stageCourant.titre}}
+                            </h5>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    {{stageCourant.descMission}}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                Card footer
+                            </div>
+                        </div>
+                    </div>
+                {% if loop.index % 3 == 0 %}
+                <br>
+                {% endif %}
+                {% endfor %}
                 </div>
             </div>
         </div>
-    {% endfor %}
+
+    
 
 {% endblock %}
 
