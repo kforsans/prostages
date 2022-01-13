@@ -20,7 +20,7 @@ class ProstagesController extends AbstractController
 
         $stages = $repositoryStage->findAll();
 
-        return $this->render('prostages/index.html.twig', ['stages' => '$stages']);
+        return $this->render('prostages/index.html.twig', ['stages' => $stages]);
     }
 
     /**

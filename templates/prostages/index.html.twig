@@ -7,7 +7,24 @@
 {% endblock %}
 
 {% block contenuPage %}
-    <h3>Ici apparaitra la liste des stages disponibles</h3>
+    {% for stageCourant in stages %}
+        <div class="card-deck">
+            <div class="card bg-default">
+                <h5 class="card-header">
+                    {{stageCourant.titre}}
+                </h5>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{stageCourant.descMission}}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    Card footer
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}
 
 {% block footerPage %}{% endblock %}
