@@ -8,8 +8,10 @@
 
 {% block contenuPage %}
     {% for entrepriseCourante in entreprises %}
-        <a href="{{path('stages-entreprise',{id:entrepriseCourante.id})}}">hello</a>
+        <h3>{{entrepriseCourante.nom}}
+        <a href="{{path('stages-entreprise',{id:entrepriseCourante.id})}}">Voir les stages</a></h3>
+        <br>
     {% endfor %}
 {% endblock %}
 
-{% block footerPage %}Footer des entreprises{% endblock %}
+{% block footerPage %}{% endblock %}
