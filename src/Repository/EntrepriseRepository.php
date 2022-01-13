@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Enreprise;
+use App\Entity\Entreprise;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Enreprise|null find($id, $lockMode = null, $lockVersion = null)
- * @method Enreprise|null findOneBy(array $criteria, array $orderBy = null)
- * @method Enreprise[]    findAll()
- * @method Enreprise[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Entreprise|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Entreprise|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Entreprise[]    findAll()
+ * @method Entreprise[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EnrepriseRepository extends ServiceEntityRepository
+class EntrepriseRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Enreprise::class);
+        parent::__construct($registry, Entreprise::class);
     }
 
     // /**
-    //  * @return Enreprise[] Returns an array of Enreprise objects
+    //  * @return Entreprise[] Returns an array of Entreprise objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EnrepriseRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Enreprise
+    public function findOneBySomeField($value): ?Entreprise
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

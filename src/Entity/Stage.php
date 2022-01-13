@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,19 +20,34 @@ class Stage
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=255)
      */
     private $titre;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $descMission;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=150)
      */
     private $emailContact;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="stages")
+     */
+    private $enreprise;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="stages")
+     */
+    private $formation;
+
+    public function __construct()
+    {
+        $this->formation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -54,7 +71,7 @@ class Stage
         return $this->descMission;
     }
 
-    public function setDescMission(?string $descMission): self
+    public function setDescMission(string $descMission): self
     {
         $this->descMission = $descMission;
 
@@ -66,9 +83,45 @@ class Stage
         return $this->emailContact;
     }
 
-    public function setEmailContact(?string $emailContact): self
+    public function setEmailContact(string $emailContact): self
     {
         $this->emailContact = $emailContact;
+
+        return $this;
+    }
+
+    public function getEnreprise(): ?Entreprise
+    {
+        return $this->enreprise;
+    }
+
+    public function setEnreprise(?Entreprise $enreprise): self
+    {
+        $this->enreprise = $enreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Formation[]
+     */
+    public function getFormation(): Collection
+    {
+        return $this->formation;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formation->contains($formation)) {
+            $this->formation[] = $formation;
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        $this->formation->removeElement($formation);
 
         return $this;
     }
