@@ -73,6 +73,7 @@ class AppFixtures extends Fixture
             for($i=0; $i <= $nbFormationsConcernees; $i++){
                 $formationConcernee = $faker->numberBetween($min = 0, $max = count($tabFormations)-1);
                 $tabFormations[$formationConcernee] -> addStage($stage);
+                $manager->persist($tabFormations[$formationConcernee]);
             }
             
             
