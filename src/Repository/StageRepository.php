@@ -36,14 +36,15 @@ class StageRepository extends ServiceEntityRepository
     public function findByFormation($value)
     {
         //Gestionnaire d'entités
-        $entityManager = this->getEntityManager();
+        $entityManager = $this->getEntityManager();
         
         //Construction requete
         $requete = $entityManager->createQuery(
             'SELECT s 
-             FROM AppEntoty\Entity\Stage s
-             WHERE formation = $value'
+             FROM App\Entity\Stage s
+             WHERE :valeur MEMBER OF s.formation'
         );
+        $requete->setParameter(':valeur', $value);
 
         //Executer requete + retourner
         return $requete->execute();

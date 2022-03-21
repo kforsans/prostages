@@ -73,7 +73,7 @@ class ProstagesController extends AbstractController
         $repositoryFormation = $this->getDoctrine()->getRepository(Formation::class);
 
         $formation = $repositoryFormation->find($id);
-        $stages = $repositoryStage->findByFormation();
+        $stages = $repositoryStage->findByFormation($id);
 
         return $this->render('prostages/stages-formation.html.twig', [
             'stages' => $stages,
