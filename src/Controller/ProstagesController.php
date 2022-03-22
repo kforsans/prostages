@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 class ProstagesController extends AbstractController
 {
@@ -45,10 +47,10 @@ class ProstagesController extends AbstractController
 
         //Création du formulaire avec les informations demandées
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
-        ->add('nom')
-        ->add('activite')
-        ->add('adresse')
-        ->add('urlSite')
+        ->add('nom', TextType::class)
+        ->add('activite', TextType::class)
+        ->add('adresse', TextType::class)
+        ->add('urlSite', UrlType::class)
         ->getForm();
 
         //Création de la représentation graphique du formuaire
