@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
+use App\Form\EntrepriseType;
+use App\Form\StageType;
+use App\Form\FormationType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,13 +51,8 @@ class ProstagesController extends AbstractController
         // Création d'une ressource initialement vierge
         $entreprise = new Entreprise ();
 
-        // création d'un objet formulaire pour ajouter une ressource
-        $formulaireEntreprise = $this -> createFormBuilder ( $entreprise )
-            -> add ('nom')
-            -> add ('activite')
-            -> add ('adresse')
-            -> add ('urlSite')
-            -> getForm ();
+        $formulaireEntreprise = $this -> createForm ( EntrepriseType::class,$entreprise );
+
         $formulaireEntreprise -> handleRequest ( $requete );
 
         if($formulaireEntreprise->isSubmitted()&& $formulaireEntrepriseModif->isValid())
@@ -67,7 +65,7 @@ class ProstagesController extends AbstractController
         $manager -> flush ();
 
         // Rediriger l' utilisateur vers la page affichant la liste des ressources
-        return $this -> redirectToRoute ('prostages_accueil');
+        return $this -> redirectToRoute ('accueil');
 
         }
         // Afficher la page d'ajout d'une entreprise
@@ -79,13 +77,7 @@ class ProstagesController extends AbstractController
      */
     public function modifierEntreprise (Request $requete, EntityManagerInterface $manager, Entreprise $entreprise)
     {
-    // création d'un objet formulaire pour ajouter une ressource
-    $formulaireEntrepriseModif = $this -> createFormBuilder ( $entreprise )
-            -> add ('nom', TextType::class)
-            -> add ('activite', TextType::class)
-            -> add ('adresse', TextType::class)
-            -> add ('urlSite', UrlType::class)
-            -> getForm ();
+    $formulaireEntrepriseModif = $this -> createForm ( EntrepriseType::class,$entreprise );
 
     $formulaireEntrepriseModif -> handleRequest ( $requete );
 
@@ -98,7 +90,7 @@ class ProstagesController extends AbstractController
         return $this -> redirectToRoute ('accueil');
     }
     // Afficher la page d'ajout d'une entreprise
-    return $this -> render ('prostages/modifierEntreprise.html.twig ',
+    return $this -> render ('prostages/ajoutEntreprise.html.twig ',
     ['vueFormulaire' => $formulaireEntrepriseModif -> createView ()]);
     }
 
@@ -161,4 +153,52 @@ class ProstagesController extends AbstractController
             'stage' => $stage,
         ]);
     }
+
+    /**
+	 * @Route ("/stages/ajouter" , name ="ajouter_stage")
+	 */
+	public function ajouterStage (Request $requete, EntityManagerInterface $manager)
+	{
+        // Création d'une ressource initialement vierge
+        $stage = new Stage ();
+
+        $formulaireStage = $this -> createForm ( StageType::class,$stage );
+        $formulaireStage -> handleRequest ( $requete);
+
+        if($formulaireStage->isSubmitted() && $formulaireStage->isValid())
+        {
+            // Enregistrer la ressource en BD
+            $manager -> persist ($stage);
+            $manager -> flush ();
+            // Rediriger l' utilisateur vers la page affichant la liste des ressources
+            return $this -> redirectToRoute ('accueil');
+
+        }
+        // Afficher la page d'ajout d'une entreprise
+        return $this -> render ('prostages/ajoutStage.html.twig ',
+        ['vueFormulaireStage' => $formulaireStage -> createView ()]);
+	}
+
+	/**
+	 * @Route ("/stage/modifier/{id}" , name ="modifier_stage")
+	 */
+	public function modifierStage (Request $requete, EntityManagerInterface $manager, Stage $stage)
+		{
+
+		$formulaireStage = $this -> createForm (StageType::class,$stage );
+		$formulaireStage -> handleRequest ( $requete);
+
+		if($formulaireStage->isSubmitted() && $formulaireStage->isValid())
+		{
+		// Enregistrer la ressource en BD
+		$manager -> persist ($stage);
+		$manager -> flush ();
+		// Rediriger l' utilisateur vers la page affichant la liste des ressources
+		return $this -> redirectToRoute ('accueil');
+
+		}
+		// Afficher la page d'ajout d'une entreprise
+		return $this -> render ('prostages/ajoutStage.html.twig ',
+		['vueFormulaireStage' => $formulaireStage -> createView ()]);
+		}
 }

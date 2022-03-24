@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block contenuPage %}
+<div class="row">
+				<div class="col-md-4">
+				</div>
+                <div class="col-md-4">
+                 <div class="example-wrapper">
+					  <h4>{{ form_label(vueFormulaireStage) }}</h4>
+                        {{ form_start(vueFormulaireStage, {'attr': {'novalidate': 'novalidate'}}) }}
+                            {{ form_row(vueFormulaireStage.titre) }}<br>
+                            {{ form_row(vueFormulaireStage.descMission) }}<br>                      
+                            {{ form_row(vueFormulaireStage.emailContact) }}<br> 
+
+                        {{ form_row(vueFormulaireStage.enreprise) }}           
+                        
+                            {{ form_row(vueFormulaireStage.formation) }}<br>            
+                            <br><br><button type="submit" class="btn btn-dark">Ajouter</button>
+                        {{ form_end(vueFormulaireStage) }}
+				</div
+				</div>
+				<div class="col-md-4">
+				</div>
+			</div>
+
+{% endblock %}

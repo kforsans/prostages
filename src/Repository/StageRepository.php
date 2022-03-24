@@ -23,7 +23,32 @@ class StageRepository extends ServiceEntityRepository
     //  * @return Stage[] Returns an array of Stage objects
     //  */
 
-    public function findByEntreprise($value)
+
+    public function findByFormation($nom)
+    {
+        $requete = $this->getEntityManager()->createQuery("SELECT s,f,e
+        from App\Entity\Stage s
+        JOIN s.formation f
+        JOIN s.enreprise e
+        WHERE f.id = :nom"
+        );
+        $requete->setParameter('nom',$nom);
+        return $requete->execute();
+    }
+
+    public function findByEntreprise($nom)
+    {
+        $requete = $this->getEntityManager()->createQuery("SELECT s,f,e
+        from App\Entity\Stage s
+        JOIN s.formation f
+        JOIN s.enreprise e
+        WHERE e.id = :nom"
+        );
+        $requete->setParameter('nom',$nom);
+        return $requete->execute();
+    }
+
+    public function findByEntrepriseAutre($value)
     {
         return $this->createQueryBuilder('s')
             ->where('s.enreprise = :val')
@@ -33,7 +58,7 @@ class StageRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByFormation($value)
+    public function findByFormationAutre($value)
     {
         //Gestionnaire d'entités
         $entityManager = $this->getEntityManager();
