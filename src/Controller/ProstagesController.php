@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stage;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
@@ -40,24 +43,63 @@ class ProstagesController extends AbstractController
     /**
      * @Route("/entreprises/ajouter", name="ajout-entreprise")
      */
-    public function ajouterEntreprise(): Response
+    public function ajouterEntreprise (Request $requete, EntityManagerInterface $manager)
+	{
+        // Création d'une ressource initialement vierge
+        $entreprise = new Entreprise ();
+
+        // création d'un objet formulaire pour ajouter une ressource
+        $formulaireEntreprise = $this -> createFormBuilder ( $entreprise )
+            -> add ('nom')
+            -> add ('activite')
+            -> add ('adresse')
+            -> add ('urlSite')
+            -> getForm ();
+        $formulaireEntreprise -> handleRequest ( $requete );
+
+        if($formulaireEntreprise->isSubmitted()&& $formulaireEntrepriseModif->isValid())
+        {
+        // Enregistrer la date d'ajout de la ressource
+        $entreprise -> setDateAjout (new \DateTime ());
+        // Enregistrer la ressource en BD
+
+        $manager -> persist ($entreprise);
+        $manager -> flush ();
+
+        // Rediriger l' utilisateur vers la page affichant la liste des ressources
+        return $this -> redirectToRoute ('prostages_accueil');
+
+        }
+        // Afficher la page d'ajout d'une entreprise
+        return $this -> render ('prostages/ajoutEntreprise.html.twig ',
+        ['vueFormulaire' => $formulaireEntreprise -> createView ()]);
+	}
+    /**
+     * @Route("/entreprises/modifier/{id}", name="modifier-entreprise")
+     */
+    public function modifierEntreprise (Request $requete, EntityManagerInterface $manager, Entreprise $entreprise)
     {
-        //Création de la nouvelle entreprise vierge
-        $entreprise = new Entreprise();
+    // création d'un objet formulaire pour ajouter une ressource
+    $formulaireEntrepriseModif = $this -> createFormBuilder ( $entreprise )
+            -> add ('nom', TextType::class)
+            -> add ('activite', TextType::class)
+            -> add ('adresse', TextType::class)
+            -> add ('urlSite', UrlType::class)
+            -> getForm ();
 
-        //Création du formulaire avec les informations demandées
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-        ->add('nom', TextType::class)
-        ->add('activite', TextType::class)
-        ->add('adresse', TextType::class)
-        ->add('urlSite', UrlType::class)
-        ->getForm();
+    $formulaireEntrepriseModif -> handleRequest ( $requete );
 
-        //Création de la représentation graphique du formuaire
-        $vueFormulaire = $formulaireEntreprise->createView();
-
-        //Affichage de la page
-        return $this->render('prostages/ajoutEntreprise.html.twig',['vueFormulaire' => $vueFormulaire]);
+    if($formulaireEntrepriseModif->isSubmitted() && $formulaireEntrepriseModif->isValid())
+    {
+        // Enregistrer la ressource en BD
+        $manager -> persist ($entreprise);
+        $manager -> flush ();
+        // Rediriger l' utilisateur vers la page affichant la liste des ressources
+        return $this -> redirectToRoute ('accueil');
+    }
+    // Afficher la page d'ajout d'une entreprise
+    return $this -> render ('prostages/modifierEntreprise.html.twig ',
+    ['vueFormulaire' => $formulaireEntrepriseModif -> createView ()]);
     }
 
     /**
