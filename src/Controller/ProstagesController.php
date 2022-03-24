@@ -44,7 +44,7 @@ class ProstagesController extends AbstractController
     }
 
     /**
-     * @Route("/entreprises/ajouter", name="ajout-entreprise")
+     * @Route("/admin/entreprises/ajouter", name="ajout-entreprise")
      */
     public function ajouterEntreprise (Request $requete, EntityManagerInterface $manager)
 	{
@@ -73,7 +73,7 @@ class ProstagesController extends AbstractController
         ['vueFormulaire' => $formulaireEntreprise -> createView ()]);
 	}
     /**
-     * @Route("/entreprises/modifier/{id}", name="modifier-entreprise")
+     * @Route("/admin/entreprises/modifier/{id}", name="modifier-entreprise")
      */
     public function modifierEntreprise (Request $requete, EntityManagerInterface $manager, Entreprise $entreprise)
     {
@@ -155,7 +155,7 @@ class ProstagesController extends AbstractController
     }
 
     /**
-	 * @Route ("/stages/ajouter" , name ="ajouter_stage")
+	 * @Route ("/profile/stages/ajouter" , name ="ajouter_stage")
 	 */
 	public function ajouterStage (Request $requete, EntityManagerInterface $manager)
 	{
@@ -180,7 +180,7 @@ class ProstagesController extends AbstractController
 	}
 
 	/**
-	 * @Route ("/stage/modifier/{id}" , name ="modifier_stage")
+	 * @Route ("/profile/stage/modifier/{id}" , name ="modifier_stage")
 	 */
 	public function modifierStage (Request $requete, EntityManagerInterface $manager, Stage $stage)
 		{

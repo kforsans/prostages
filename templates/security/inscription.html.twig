@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription sur PorStages{% endblock %}
+
+{% block contenuPage %}
+<div class="row">
+				<div class="col-md-4">
+				</div>
+                <div class="col-md-4">
+                 <div class="example-wrapper">
+					<h1>Inscription sur PorStages</h1>
+					{{ form_start(vueFormulaireUser, {'attr': {'novalidate' : 'novalidate'}}) }}
+                    {{ form_row(vueFormulaireUser.prenom, {'attr':{'placeholder':"Votre Prenom ..."}})}}
+					{{ form_row(vueFormulaireUser.nom, {'attr':{'placeholder':"Votre Nom ..."}})}}
+					{{ form_row(vueFormulaireUser.email, {'attr':{'placeholder':"Votre Email ..."}})}}
+                    {{ form_row(vueFormulaireUser.password, {'attr':{'placeholder':"Votre Mot De Passe ..."}})}}
+					<button type="submit" class="btn btn-dark">Enregistrer</button>
+					<br>
+					{{ form_end(vueFormulaireUser) }}
+				</div
+				</div>
+				<div class="col-md-4">
+				</div>
+			</div>
+
+{% endblock %}
